@@ -249,15 +249,11 @@ h1,
   text-wrap: balance;
 }
 
-.hero-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(280px, 0.85fr);
-  gap: clamp(28px, 5vw, 64px);
-  align-items: end;
+.hero-copy {
+  max-width: 40rem;
   margin-top: clamp(28px, 4vw, 40px);
 }
 
-.hero-grid > *,
 .principles > *,
 .about-grid > *,
 .chapter > * {
@@ -843,7 +839,6 @@ h2 {
 }
 
 @media (max-width: 860px) {
-  .hero-grid,
   .principles,
   .about-grid,
   .chapter {
