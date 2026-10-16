@@ -23,6 +23,71 @@
 
 .hero-title h1 span:last-child { color: #565c61; }
 
+/* Homepage: calm, centered, and intentionally sparse. */
+.home-intro {
+  padding-block: clamp(72px, 10vw, 126px) clamp(68px, 9vw, 112px);
+}
+.home-intro-inner {
+  width: min(760px, 100%);
+  margin-inline: auto;
+  text-align: center;
+}
+.home-role,
+.home-location {
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+.home-intro h1 {
+  margin: 18px 0 16px;
+  font-family: var(--sans);
+  font-size: clamp(48px, 6vw, 72px);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -.045em;
+}
+.home-directory {
+  padding-bottom: clamp(96px, 12vw, 150px);
+  border-top: 1px solid var(--line-dark);
+}
+.home-directory a {
+  display: grid;
+  grid-template-columns: 110px minmax(0,1fr) 30px;
+  gap: 24px;
+  align-items: center;
+  min-height: 94px;
+  border-bottom: 1px solid var(--line-dark);
+}
+.home-directory-label {
+  color: var(--muted);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.home-directory-title {
+  font-size: clamp(17px, 2vw, 22px);
+  font-weight: 500;
+  letter-spacing: -.02em;
+  transition: transform .25s var(--ease), color .25s ease;
+}
+.home-directory-arrow {
+  justify-self: end;
+  color: #777b7f;
+  transition: transform .25s var(--ease);
+}
+.home-directory a:hover .home-directory-title,
+.home-directory a:focus-visible .home-directory-title {
+  color: #50555a;
+  transform: translateX(3px);
+}
+.home-directory a:hover .home-directory-arrow,
+.home-directory a:focus-visible .home-directory-arrow {
+  transform: translateX(4px);
+}
+
 /* Quiet, tonal index. The condensed type carries the character. */
 .index-row,
 .row-design,
@@ -159,6 +224,14 @@ a.site-frame:hover,
 
 @media (max-width: 700px) {
   .has-js .site-nav { background: rgba(247,245,240,.99); }
+  .home-intro { padding-block: 58px 64px; }
+  .home-intro h1 { font-size: clamp(44px, 14vw, 62px); }
+  .home-directory a {
+    grid-template-columns: 72px minmax(0,1fr) 22px;
+    gap: 14px;
+    min-height: 84px;
+  }
+  .home-directory-title { font-size: 16px; }
   .project-accordion summary {
     grid-template-columns: 42px minmax(0,1fr) 28px;
     gap: 14px;
