@@ -227,7 +227,7 @@ main:focus-visible {
 }
 
 .hero {
-  padding: clamp(48px, 8vh, 88px) 0 clamp(36px, 6vh, 64px);
+  padding: clamp(72px, 14vh, 140px) 0 clamp(80px, 16vh, 160px);
 }
 
 .eyebrow {
@@ -802,8 +802,23 @@ h2 {
 }
 
 .footer-row {
+  flex-wrap: wrap;
+  gap: 12px 24px;
   padding-top: 18px;
   border-top: 1px solid var(--line);
+}
+
+.site-footer nav {
+  display: flex;
+  gap: 18px;
+}
+
+.site-footer a {
+  color: inherit;
+}
+
+.site-footer a[aria-current="page"] {
+  color: var(--ink);
 }
 
 .site-footer a:hover {
