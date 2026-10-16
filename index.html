@@ -13,8 +13,10 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.eliasmespinosa.com/">
   <link rel="stylesheet" href="/assets/styles.css?v=20261016-6">
-  <link rel="stylesheet" href="/assets/neutral.css?v=20261016-8">
-  <script defer src="/assets/script.js?v=20261016-8"></script>
+  <link rel="stylesheet" href="/assets/neutral.css?v=20261016-10">
+  <script src="/assets/cms-config.js?v=20261016-1"></script>
+  <script defer src="/assets/script.js?v=20261016-9"></script>
+  <script defer src="/assets/cms.js?v=20261016-2"></script>
 </head>
 <body data-page="home">
   <a class="skip" href="#content">Skip to content</a>
@@ -37,8 +39,8 @@
           <h1 id="home-title"><span>Elias</span><span>Espinosa.</span></h1>
         </div>
         <div class="hero-note" data-reveal>
-          <p>Solutions architecture and systems design.</p>
-          <p>Design, travel, photography, and independent work.</p>
+          <p data-cms="home.primary">Solutions architecture and systems design.</p>
+          <p data-cms="home.secondary">Design, travel, photography, and independent work.</p>
           <div class="hero-actions"><a class="button" href="/about.html">About me <span aria-hidden="true">→</span></a><a class="text-link" href="/work.html">Projects <span aria-hidden="true">→</span></a></div>
         </div>
       </div>
@@ -50,46 +52,43 @@
     <section id="interests" class="index-section wrap" aria-labelledby="interests-title">
       <div class="section-intro" data-reveal>
         <p class="eyebrow">Areas</p>
-        <div><h2 id="interests-title">Work and interests.</h2><p>Systems, design, travel, and photography.</p></div>
+        <div><h2 id="interests-title">Work and interests.</h2><p data-cms="home.areas">Systems, design, travel, and photography.</p></div>
       </div>
 
       <a class="index-row row-work" href="/about.html#work" data-reveal>
         <span class="row-number">01</span>
         <div class="row-title"><span class="eyebrow">Work</span><h3>Solutions architecture<br>&amp; systems design.</h3></div>
-        <p>Architecture, automation, and platforms.</p>
+        <p data-cms="home.workSummary">Architecture, automation, and platforms.</p>
         <span class="row-arrow" aria-hidden="true">→</span>
       </a>
 
       <a class="index-row row-design" href="/about.html#interests" data-reveal>
         <span class="row-number">02</span>
         <div class="row-title"><span class="eyebrow">Design</span><h3>Interiors &amp;<br>personal style.</h3></div>
-        <p>Interiors, clothing, and objects.</p>
+        <p data-cms="home.designSummary">Interiors, clothing, and objects.</p>
         <span class="row-arrow" aria-hidden="true">→</span>
       </a>
 
       <a class="index-row row-places" href="/about.html#places" data-reveal>
         <span class="row-number">03</span>
         <div class="row-title"><span class="eyebrow">Travel</span><h3>Travel &amp;<br>photography.</h3></div>
-        <p>Places, hotels, and photographs.</p>
+        <p data-cms="home.travelSummary">Places, hotels, and photographs.</p>
         <span class="row-arrow" aria-hidden="true">→</span>
       </a>
     </section>
 
-    <section class="project-band">
-      <div class="project-spotlight wrap">
-        <div class="project-copy" data-reveal>
-          <p class="eyebrow">Independent project / 01</p>
-          <h2>Personal site.</h2>
-          <p>Designed and built by me.</p>
-          <a class="text-link" href="/work.html#personal-site">See the project <span aria-hidden="true">→</span></a>
-        </div>
-        <a class="site-frame" href="/work.html#personal-site" aria-label="View the personal website project" data-reveal>
-          <div class="frame-top"><span></span><b>eliasmespinosa.com</b><i></i></div>
-          <div class="frame-page" aria-hidden="true">
-            <div class="frame-nav"><strong>Elias Espinosa</strong><span>About &nbsp;&nbsp; Projects &nbsp;&nbsp; Contact</span></div>
-            <div class="frame-hero"><small>SOLUTIONS ARCHITECTURE / SYSTEMS DESIGN</small><strong>Elias<br>Espinosa.</strong><p>Work and interests.</p></div>
-            <div class="frame-lines"><i></i><i></i><i></i></div>
-          </div>
+    <section class="home-project-index wrap" data-reveal>
+      <div class="home-project-head">
+        <p class="eyebrow">Projects</p>
+        <a class="text-link" href="/work.html">View all <span aria-hidden="true">→</span></a>
+      </div>
+      <div data-cms-home-projects>
+        <a class="home-project-row" href="/work.html#personal-site">
+          <span class="row-number">01</span>
+          <strong>Personal site.</strong>
+          <span>Design &amp; development</span>
+          <span>2026 / Ongoing</span>
+          <span aria-hidden="true">→</span>
         </a>
       </div>
     </section>
