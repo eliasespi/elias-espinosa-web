@@ -88,6 +88,27 @@ if (sectionLinks.length && 'IntersectionObserver' in window) {
   sections.forEach(section => sectionObserver.observe(section));
 }
 
+const projectAccordions = [...document.querySelectorAll('.project-accordion')];
+if (projectAccordions.length) {
+  projectAccordions.forEach(project => {
+    project.addEventListener('toggle', () => {
+      if (!project.open) return;
+      projectAccordions.forEach(other => {
+        if (other !== project) other.open = false;
+      });
+    });
+  });
+
+  const openProjectFromHash = () => {
+    if (!window.location.hash) return;
+    const target = document.querySelector(window.location.hash);
+    if (target?.matches('.project-accordion')) target.open = true;
+  };
+
+  openProjectFromHash();
+  window.addEventListener('hashchange', openProjectFromHash);
+}
+
 // A short exit transition makes page-to-page navigation feel connected without hijacking scrolling.
 document.querySelectorAll('a[href]').forEach(link => {
   link.addEventListener('click', event => {
