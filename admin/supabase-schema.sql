@@ -20,6 +20,13 @@ for select
 to anon, authenticated
 using (published = true);
 
+drop policy if exists "users can read own admin membership" on public.site_admins;
+create policy "users can read own admin membership"
+on public.site_admins
+for select
+to authenticated
+using (user_id = auth.uid());
+
 drop policy if exists "site admins can manage content" on public.site_content;
 create policy "site admins can manage content"
 on public.site_content
@@ -38,8 +45,8 @@ with check (
   )
 );
 
--- No public policy is created for site_admins. Add the owner's auth user UUID
--- with a privileged connection after the owner signs in for the first time.
+-- Bootstrap: after the owner signs in once, insert that auth user UUID into
+-- public.site_admins using a privileged SQL session or the Supabase dashboard.
 
 insert into public.site_content (site_key, data, published)
 values (
