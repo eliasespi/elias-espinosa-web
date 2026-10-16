@@ -1,71 +1,106 @@
+const root = document.documentElement;
+root.classList.add('has-js');
+
 const year = document.getElementById('year');
 if (year) year.textContent = String(new Date().getFullYear());
+
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 const toggle = document.querySelector('.nav-toggle');
 const nav = document.getElementById('site-nav');
+
 if (toggle && nav) {
   toggle.hidden = false;
-  document.documentElement.classList.add('has-js');
   const setOpen = (open, restoreFocus = false) => {
     toggle.setAttribute('aria-expanded', String(open));
     toggle.innerHTML = open ? 'Close <span aria-hidden="true">−</span>' : 'Menu <span aria-hidden="true">+</span>';
     nav.classList.toggle('is-open', open);
     if (restoreFocus) toggle.focus();
   };
+
   toggle.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
-  document.addEventListener('keydown', (event) => {
+  document.addEventListener('keydown', event => {
     if (event.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') setOpen(false, true);
   });
-  document.addEventListener('click', (event) => {
+  document.addEventListener('click', event => {
     if (!nav.contains(event.target) && !toggle.contains(event.target)) setOpen(false);
   });
   nav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => setOpen(false)));
-  window.matchMedia('(min-width: 761px)').addEventListener('change', event => { if (event.matches) setOpen(false); });
+  window.matchMedia('(min-width: 701px)').addEventListener('change', event => {
+    if (event.matches) setOpen(false);
+  });
 }
-
-// Small, one-time entrances. Content is always present, even without motion or JS.
-const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-const entrances = new Set();
-if ('IntersectionObserver' in window && Element.prototype.animate) {
-  const reveal = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-      reveal.unobserve(entry.target);
-      if (reducedMotion.matches) return;
-      const animation = entry.target.animate(
-        [{ opacity: 0, transform: 'translateY(18px)' }, { opacity: 1, transform: 'translateY(0)' }],
-        { duration: 550, easing: 'cubic-bezier(.22,1,.36,1)' }
-      );
-      entrances.add(animation);
-      animation.finished.then(() => entrances.delete(animation), () => entrances.delete(animation));
-    });
-  }, { threshold: 0.08 });
-  document.querySelectorAll('.feature, .section-heading, .project-row, .about-stories > section, .project-description, .project-facts, .contact-card, .hello').forEach(el => reveal.observe(el));
-}
-reducedMotion.addEventListener('change', event => {
-  if (event.matches) entrances.forEach(animation => animation.cancel());
-});
 
 const header = document.querySelector('.site-header');
 let scrollQueued = false;
-const updateHeader = () => {
-  header?.classList.toggle('is-scrolled', window.scrollY > 12);
+const updateScrollState = () => {
+  const scrollable = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
+  const progress = Math.min(Math.max(window.scrollY / scrollable, 0), 1);
+  root.style.setProperty('--scroll-progress', progress.toFixed(4));
+  header?.classList.toggle('is-scrolled', window.scrollY > 10);
   scrollQueued = false;
 };
 window.addEventListener('scroll', () => {
-  if (!scrollQueued) { scrollQueued = true; requestAnimationFrame(updateHeader); }
+  if (!scrollQueued) {
+    scrollQueued = true;
+    requestAnimationFrame(updateScrollState);
+  }
 }, { passive: true });
-updateHeader();
+window.addEventListener('resize', updateScrollState, { passive: true });
+updateScrollState();
 
-// The About page keeps its local navigation in sync with the section in view.
+const revealItems = [...document.querySelectorAll('[data-reveal]')];
+if (!reducedMotion.matches && 'IntersectionObserver' in window) {
+  revealItems.forEach((item, index) => {
+    item.classList.add('will-reveal');
+    if (index < 4) item.style.transitionDelay = `${index * 45}ms`;
+  });
+
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-visible');
+      revealObserver.unobserve(entry.target);
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -5% 0px' });
+
+  revealItems.forEach(item => revealObserver.observe(item));
+} else {
+  revealItems.forEach(item => item.classList.add('is-visible'));
+}
+
 const sectionLinks = [...document.querySelectorAll('.about-index a[href^="#"]')];
 if (sectionLinks.length && 'IntersectionObserver' in window) {
+  const sections = sectionLinks
+    .map(link => document.querySelector(link.hash))
+    .filter(Boolean);
+
   const sectionObserver = new IntersectionObserver(entries => {
-    const current = entries.find(entry => entry.isIntersecting);
-    if (!current) return;
+    const visible = entries
+      .filter(entry => entry.isIntersecting)
+      .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+    if (!visible) return;
     sectionLinks.forEach(link => {
-      if (link.hash === '#' + current.target.id) link.setAttribute('aria-current', 'location');
+      if (link.hash === `#${visible.target.id}`) link.setAttribute('aria-current', 'location');
       else link.removeAttribute('aria-current');
     });
-  }, { rootMargin: '-15% 0px -60% 0px', threshold: 0 });
-  document.querySelectorAll('.about-stories > section').forEach(section => sectionObserver.observe(section));
+  }, { rootMargin: '-18% 0px -58% 0px', threshold: [0, .2, .5] });
+
+  sections.forEach(section => sectionObserver.observe(section));
 }
+
+// A short exit transition makes page-to-page navigation feel connected without hijacking scrolling.
+document.querySelectorAll('a[href]').forEach(link => {
+  link.addEventListener('click', event => {
+    if (reducedMotion.matches || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    if (link.target || link.hasAttribute('download')) return;
+
+    const destination = new URL(link.href, window.location.href);
+    if (destination.origin !== window.location.origin) return;
+    const sameDocument = destination.pathname === window.location.pathname && destination.search === window.location.search;
+    if (sameDocument && destination.hash) return;
+
+    event.preventDefault();
+    root.classList.add('page-leaving');
+    window.setTimeout(() => { window.location.href = destination.href; }, 150);
+  });
+});
