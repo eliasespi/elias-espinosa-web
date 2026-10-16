@@ -1,0 +1,74 @@
+:root {
+  --paper: #f1eee7;
+  --paper-deep: #e8e4dc;
+  --cream: #faf8f3;
+  --ink: #26292b;
+  --muted: #74787a;
+  --forest: #586168;
+  --navy: #646d73;
+  --tan: #d3c9bb;
+  --rust: #806b59;
+  --line: #d3cec5;
+  --line-dark: #bcb6ad;
+}
+
+:focus-visible { outline-color: #696f73; }
+::selection { background: #d9d6d0; }
+
+.site-header { background: rgba(241,238,231,.92); }
+.site-header.is-scrolled { background: rgba(241,238,231,.98); border-bottom-color: rgba(74,78,80,.17); }
+.site-header::after,
+.site-nav a::after,
+.about-index > a::before { background: #777d81; }
+
+.hero-title h1 span:last-child { color: #596168; }
+
+/* Quiet, tonal index. The condensed type carries the character. */
+.index-row,
+.row-design,
+.row-places {
+  --row-bg: transparent;
+  --row-fg: var(--ink);
+}
+.index-row::before { display: none; }
+.index-row:hover,
+.index-row:focus-visible { color: var(--ink); }
+.index-row:hover .row-number,
+.index-row:hover .row-title .eyebrow,
+.index-row:hover > p,
+.index-row:focus-visible .row-number,
+.index-row:focus-visible .row-title .eyebrow,
+.index-row:focus-visible > p {
+  color: var(--muted);
+  opacity: 1;
+}
+.index-row:hover .row-title h3,
+.index-row:focus-visible .row-title h3 { color: #4d5357; }
+.row-arrow { color: #777b7e; }
+
+.project-band { background: #e9e6df; border-color: var(--line); }
+.site-frame { box-shadow: 0 10px 24px rgba(37,40,42,.055); }
+a.site-frame:hover,
+.project-cover:hover .site-frame { box-shadow: 0 14px 30px rgba(37,40,42,.075); }
+.frame-lines i { background: #6c7378; }
+.frame-lines i:nth-child(2) { background: #b8b1a7; }
+.frame-lines i:nth-child(3) { background: #857365; }
+
+.hello > a span { color: #70777b; }
+.project-cover { background: #e9e6df; }
+
+.contact-panel {
+  background: #303336;
+  border-color: #303336;
+}
+.contact-panel-copy .eyebrow { color: #c5c8c9; }
+.contact-panel-copy p { color: #d2d4d5; }
+.contact-link {
+  background: #292c2e;
+  border-left-color: rgba(255,255,255,.09);
+}
+.contact-link:hover { background: #25282a; }
+
+@media (max-width: 700px) {
+  .has-js .site-nav { background: rgba(241,238,231,.99); }
+}
