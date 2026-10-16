@@ -1,65 +1,23 @@
-document.documentElement.classList.add("js");
-
-const year = document.getElementById("year");
+const year = document.getElementById('year');
 if (year) year.textContent = String(new Date().getFullYear());
-
-const header = document.querySelector(".site-header");
-const onScroll = () => {
-  if (header) header.classList.toggle("is-scrolled", window.scrollY > 4);
-};
-onScroll();
-window.addEventListener("scroll", onScroll, { passive: true });
-
-const toggle = document.querySelector(".nav-toggle");
-const nav = document.getElementById("site-nav");
-
-const setOpen = (open) => {
-  if (!toggle || !nav) return;
-  toggle.setAttribute("aria-expanded", open ? "true" : "false");
-  toggle.textContent = open ? "Close" : "Menu";
-  nav.classList.toggle("is-open", open);
-};
-
-toggle?.addEventListener("click", () => {
-  setOpen(toggle.getAttribute("aria-expanded") !== "true");
-});
-
-document.addEventListener("click", (event) => {
-  if (!toggle || !nav) return;
-  if (toggle.getAttribute("aria-expanded") !== "true") return;
-  if (!(event.target instanceof Node)) return;
-  if (toggle.contains(event.target) || nav.contains(event.target)) return;
-  setOpen(false);
-});
-
-document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape") setOpen(false);
-});
-
-nav?.querySelectorAll("a").forEach((link) => {
-  link.addEventListener("click", () => setOpen(false));
-});
-
-const desktopNav = window.matchMedia("(min-width: 761px)");
-desktopNav.addEventListener("change", () => {
-  if (desktopNav.matches) setOpen(false);
-});
-
-const reveals = document.querySelectorAll(".reveal");
-const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-if (reduce || !("IntersectionObserver" in window)) {
-  reveals.forEach((el) => el.classList.add("is-in"));
-} else {
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        entry.target.classList.add("is-in");
-        observer.unobserve(entry.target);
-      });
-    },
-    { threshold: 0, rootMargin: "0px 0px -24px 0px" }
-  );
-  reveals.forEach((el) => observer.observe(el));
+const toggle = document.querySelector('.nav-toggle');
+const nav = document.getElementById('site-nav');
+if (toggle && nav) {
+  toggle.hidden = false;
+  document.documentElement.classList.add('has-js');
+  const setOpen = (open, restoreFocus = false) => {
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.innerHTML = open ? 'Close <span aria-hidden="true">−</span>' : 'Menu <span aria-hidden="true">+</span>';
+    nav.classList.toggle('is-open', open);
+    if (restoreFocus) toggle.focus();
+  };
+  toggle.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') setOpen(false, true);
+  });
+  document.addEventListener('click', (event) => {
+    if (!nav.contains(event.target) && !toggle.contains(event.target)) setOpen(false);
+  });
+  nav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => setOpen(false)));
+  window.matchMedia('(min-width: 761px)').addEventListener('change', event => { if (event.matches) setOpen(false); });
 }
