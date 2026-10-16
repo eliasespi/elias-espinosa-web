@@ -1,29 +1,29 @@
 :root {
-  --paper: #f2f0eb;
-  --paper-deep: #e9e6df;
+  --paper: #f1eee7;
+  --paper-deep: #e8e4dc;
   --cream: #faf8f3;
-  --ink: #262521;
-  --muted: #747068;
-  --forest: #4a4741;
-  --navy: #5c5851;
-  --tan: #d7d1c6;
-  --rust: #5e5952;
-  --line: #d6d1c8;
-  --line-dark: #beb8ae;
+  --ink: #26292b;
+  --muted: #74787a;
+  --forest: #586168;
+  --navy: #646d73;
+  --tan: #d3c9bb;
+  --rust: #806b59;
+  --line: #d3cec5;
+  --line-dark: #bcb6ad;
 }
 
-:focus-visible { outline-color: #625d56; }
-::selection { background: #ddd8cf; }
+:focus-visible { outline-color: #696f73; }
+::selection { background: #d9d6d0; }
 
-.site-header { background: rgba(242,240,235,.91); }
-.site-header.is-scrolled { background: rgba(242,240,235,.97); border-bottom-color: rgba(78,74,68,.18); }
+.site-header { background: rgba(241,238,231,.92); }
+.site-header.is-scrolled { background: rgba(241,238,231,.98); border-bottom-color: rgba(74,78,80,.17); }
 .site-header::after,
 .site-nav a::after,
-.about-index > a::before { background: #5e5952; }
+.about-index > a::before { background: #777d81; }
 
-.hero-title h1 span:last-child { color: #55514b; }
+.hero-title h1 span:last-child { color: #596168; }
 
-/* Keep the index quiet. Typography and spacing do the work instead of color blocks. */
+/* Quiet, tonal index. The condensed type carries the character. */
 .index-row,
 .row-design,
 .row-places {
@@ -43,35 +43,32 @@
   opacity: 1;
 }
 .index-row:hover .row-title h3,
-.index-row:focus-visible .row-title h3 { color: #4d4943; }
-.row-arrow { color: #6d6860; }
+.index-row:focus-visible .row-title h3 { color: #4d5357; }
+.row-arrow { color: #777b7e; }
 
-.project-band { background: #ebe8e1; border-color: var(--line); }
-.site-frame { box-shadow: 0 12px 28px rgba(45,42,37,.06); }
+.project-band { background: #e9e6df; border-color: var(--line); }
+.site-frame { box-shadow: 0 10px 24px rgba(37,40,42,.055); }
 a.site-frame:hover,
-.project-cover:hover .site-frame { box-shadow: 0 16px 34px rgba(45,42,37,.08); }
-.frame-lines i,
-.frame-lines i:nth-child(2),
-.frame-lines i:nth-child(3) { background: #8b857b; }
-.frame-lines i:nth-child(2) { background: #b8b1a6; }
-.frame-lines i:nth-child(3) { background: #625e57; }
+.project-cover:hover .site-frame { box-shadow: 0 14px 30px rgba(37,40,42,.075); }
+.frame-lines i { background: #6c7378; }
+.frame-lines i:nth-child(2) { background: #b8b1a7; }
+.frame-lines i:nth-child(3) { background: #857365; }
 
-.hello > a span { color: #5e5952; }
-
-.project-cover { background: #ebe8e1; }
+.hello > a span { color: #70777b; }
+.project-cover { background: #e9e6df; }
 
 .contact-panel {
-  background: #34332f;
-  border-color: #34332f;
+  background: #303336;
+  border-color: #303336;
 }
-.contact-panel-copy .eyebrow { color: #c6c2ba; }
-.contact-panel-copy p { color: #d1cdc5; }
+.contact-panel-copy .eyebrow { color: #c5c8c9; }
+.contact-panel-copy p { color: #d2d4d5; }
 .contact-link {
-  background: #2d2c29;
-  border-left-color: rgba(255,255,255,.1);
+  background: #292c2e;
+  border-left-color: rgba(255,255,255,.09);
 }
-.contact-link:hover { background: #282724; }
+.contact-link:hover { background: #25282a; }
 
 @media (max-width: 700px) {
-  .has-js .site-nav { background: rgba(242,240,235,.99); }
+  .has-js .site-nav { background: rgba(241,238,231,.99); }
 }
