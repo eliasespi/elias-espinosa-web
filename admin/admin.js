@@ -1,7 +1,9 @@
-(() => {
+(async () => {
   const config = window.ELIAS_CMS;
   const setupPanel = document.getElementById('setup-panel');
   const authPanel = document.getElementById('auth-panel');
+  const accessPanel = document.getElementById('access-panel');
+  const accessUserId = document.getElementById('access-user-id');
   const editor = document.getElementById('editor');
   const status = document.getElementById('connection-status');
   const signOutButton = document.getElementById('sign-out');
@@ -69,15 +71,33 @@
     parent[finalKey] = value;
   };
 
-  const showSignedOut = () => {
-    authPanel.hidden = false;
+  const hidePrivatePanels = () => {
+    setupPanel.hidden = true;
+    accessPanel.hidden = true;
     editor.hidden = true;
+  };
+
+  const showSignedOut = () => {
+    hidePrivatePanels();
+    authPanel.hidden = false;
     signOutButton.hidden = true;
     status.textContent = 'Signed out';
   };
 
+  const showUnauthorized = user => {
+    authPanel.hidden = true;
+    setupPanel.hidden = true;
+    editor.hidden = true;
+    accessPanel.hidden = false;
+    signOutButton.hidden = false;
+    status.textContent = user.email || 'Signed in';
+    accessUserId.textContent = user.id;
+  };
+
   const showSignedIn = email => {
     authPanel.hidden = true;
+    setupPanel.hidden = true;
+    accessPanel.hidden = true;
     editor.hidden = false;
     signOutButton.hidden = false;
     status.textContent = email || 'Signed in';
@@ -145,6 +165,16 @@
     return workingData;
   };
 
+  const isAuthorizedAdmin = async user => {
+    const { data, error } = await client
+      .from('site_admins')
+      .select('user_id')
+      .eq('user_id', user.id)
+      .maybeSingle();
+    if (error) return false;
+    return data?.user_id === user.id;
+  };
+
   const loadContent = async () => {
     saveMessage.textContent = 'Loading…';
     const { data, error } = await client
@@ -162,6 +192,22 @@
     workingData.projects ??= [];
     hydrateForm(workingData);
     saveMessage.textContent = '';
+  };
+
+  const handleSession = async session => {
+    if (!session?.user) {
+      showSignedOut();
+      return;
+    }
+
+    const authorized = await isAuthorizedAdmin(session.user);
+    if (!authorized) {
+      showUnauthorized(session.user);
+      return;
+    }
+
+    showSignedIn(session.user.email);
+    await loadContent();
   };
 
   loginForm.addEventListener('submit', async event => {
@@ -206,19 +252,9 @@
   });
 
   const { data: { session } } = await client.auth.getSession();
-  if (session?.user) {
-    showSignedIn(session.user.email);
-    await loadContent();
-  } else {
-    showSignedOut();
-  }
+  await handleSession(session);
 
-  client.auth.onAuthStateChange(async (_event, nextSession) => {
-    if (nextSession?.user) {
-      showSignedIn(nextSession.user.email);
-      await loadContent();
-    } else {
-      showSignedOut();
-    }
+  client.auth.onAuthStateChange((_event, nextSession) => {
+    window.setTimeout(() => handleSession(nextSession), 0);
   });
 })();
