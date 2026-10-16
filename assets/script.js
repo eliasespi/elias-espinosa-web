@@ -88,48 +88,40 @@ if (sectionLinks.length && 'IntersectionObserver' in window) {
   sections.forEach(section => sectionObserver.observe(section));
 }
 
-const openProjectFromHash = () => {
-  if (!window.location.hash) return;
-  const target = document.querySelector(window.location.hash);
-  if (target?.matches('.project-accordion')) target.open = true;
-};
-
-const initProjectAccordions = () => {
-  const projects = [...document.querySelectorAll('.project-accordion')];
-  projects.forEach(project => {
-    if (project.dataset.accordionBound === 'true') return;
-    project.dataset.accordionBound = 'true';
+const projectAccordions = [...document.querySelectorAll('.project-accordion')];
+if (projectAccordions.length) {
+  projectAccordions.forEach(project => {
     project.addEventListener('toggle', () => {
       if (!project.open) return;
-      document.querySelectorAll('.project-accordion').forEach(other => {
+      projectAccordions.forEach(other => {
         if (other !== project) other.open = false;
       });
     });
   });
-  openProjectFromHash();
-};
 
-initProjectAccordions();
-window.addEventListener('hashchange', openProjectFromHash);
-document.addEventListener('cms:updated', () => {
-  initProjectAccordions();
-  document.querySelectorAll('[data-reveal]').forEach(item => item.classList.add('is-visible'));
-  updateScrollState();
-});
+  const openProjectFromHash = () => {
+    if (!window.location.hash) return;
+    const target = document.querySelector(window.location.hash);
+    if (target?.matches('.project-accordion')) target.open = true;
+  };
+
+  openProjectFromHash();
+  window.addEventListener('hashchange', openProjectFromHash);
+}
 
 // A short exit transition makes page-to-page navigation feel connected without hijacking scrolling.
-document.addEventListener('click', event => {
-  const link = event.target.closest('a[href]');
-  if (!link) return;
-  if (reducedMotion.matches || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-  if (link.target || link.hasAttribute('download')) return;
+document.querySelectorAll('a[href]').forEach(link => {
+  link.addEventListener('click', event => {
+    if (reducedMotion.matches || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    if (link.target || link.hasAttribute('download')) return;
 
-  const destination = new URL(link.href, window.location.href);
-  if (destination.origin !== window.location.origin) return;
-  const sameDocument = destination.pathname === window.location.pathname && destination.search === window.location.search;
-  if (sameDocument && destination.hash) return;
+    const destination = new URL(link.href, window.location.href);
+    if (destination.origin !== window.location.origin) return;
+    const sameDocument = destination.pathname === window.location.pathname && destination.search === window.location.search;
+    if (sameDocument && destination.hash) return;
 
-  event.preventDefault();
-  root.classList.add('page-leaving');
-  window.setTimeout(() => { window.location.href = destination.href; }, 150);
+    event.preventDefault();
+    root.classList.add('page-leaving');
+    window.setTimeout(() => { window.location.href = destination.href; }, 150);
+  });
 });
