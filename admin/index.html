@@ -6,7 +6,7 @@
   <meta name="robots" content="noindex,nofollow">
   <title>Site Admin | Elias Espinosa</title>
   <meta name="theme-color" content="#f7f5f0">
-  <link rel="stylesheet" href="/admin/admin.css?v=20261016-1">
+  <link rel="stylesheet" href="/admin/admin.css?v=20261016-2">
 </head>
 <body>
   <main class="admin-shell">
@@ -35,6 +35,13 @@
         <button class="button" type="submit">Send magic link</button>
       </form>
       <p id="auth-message" class="muted"></p>
+    </section>
+
+    <section id="access-panel" class="panel narrow" hidden>
+      <p class="admin-eyebrow">Access</p>
+      <h2>Account not authorized yet.</h2>
+      <p>Your sign-in works, but this account still needs to be added as a site admin once. After that, this page becomes the permanent editor.</p>
+      <div class="id-box"><span>User ID</span><code id="access-user-id"></code></div>
     </section>
 
     <section id="editor" hidden>
@@ -99,6 +106,6 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="/assets/cms-config.js?v=20261016-1"></script>
-  <script defer src="/admin/admin.js?v=20261016-1"></script>
+  <script defer src="/admin/admin.js?v=20261016-2"></script>
 </body>
 </html>
