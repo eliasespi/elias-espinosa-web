@@ -20,6 +20,12 @@
     }
   };
 
+  const getVisibleProjects = projects => Array.isArray(projects)
+    ? projects
+      .filter(project => project && project.published !== false)
+      .sort((a, b) => (a.order ?? 999) - (b.order ?? 999))
+    : [];
+
   const applyText = data => {
     document.querySelectorAll('[data-cms]').forEach(element => {
       const value = readPath(data, element.dataset.cms);
@@ -27,14 +33,36 @@
     });
   };
 
+  const renderHomeProjects = projects => {
+    const list = document.querySelector('[data-cms-home-projects]');
+    if (!list) return;
+    const visible = getVisibleProjects(projects).slice(0, 3);
+    if (!visible.length) return;
+
+    list.innerHTML = visible.map((project, index) => {
+      const slug = escapeHtml(project.slug || `project-${index + 1}`);
+      const title = escapeHtml(project.title || 'Untitled project');
+      const category = escapeHtml(project.category || 'Project');
+      const year = escapeHtml(project.year || '');
+      const status = escapeHtml(project.status || '');
+      const number = String(index + 1).padStart(2, '0');
+      const meta = [year, status].filter(Boolean).join(' / ');
+
+      return `
+        <a class="home-project-row" href="/work.html#${slug}">
+          <span class="row-number">${number}</span>
+          <strong>${title}</strong>
+          <span>${category}</span>
+          <span>${meta}</span>
+          <span aria-hidden="true">→</span>
+        </a>`;
+    }).join('');
+  };
+
   const renderProjects = projects => {
     const list = document.querySelector('[data-cms-projects]');
-    if (!list || !Array.isArray(projects)) return;
-
-    const visible = projects
-      .filter(project => project && project.published !== false)
-      .sort((a, b) => (a.order ?? 999) - (b.order ?? 999));
-
+    if (!list) return;
+    const visible = getVisibleProjects(projects);
     if (!visible.length) return;
 
     list.innerHTML = visible.map((project, index) => {
@@ -94,6 +122,7 @@
       const data = rows?.[0]?.data;
       if (!data || typeof data !== 'object') return;
       applyText(data);
+      renderHomeProjects(data.projects);
       renderProjects(data.projects);
       document.dispatchEvent(new CustomEvent('cms:updated'));
     })
