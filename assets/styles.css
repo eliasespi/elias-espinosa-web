@@ -9,11 +9,11 @@
   --accent-soft: rgba(0, 102, 204, 0.1);
   --mark: #6aa3ff;
   --mark-ink: #0b0d12;
-  --sent: #1b7f3a;
+  --sent: #146b30;
   --sent-bg: rgba(27, 127, 58, 0.12);
   --wait: #7a4f00;
   --wait-bg: rgba(154, 103, 0, 0.12);
-  --hold: #6e6e73;
+  --hold: #5c5c61;
   --hold-bg: rgba(110, 110, 115, 0.12);
   --shadow: 0 18px 50px rgba(0, 0, 0, 0.06);
   --radius: 22px;
@@ -55,6 +55,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--nav-h) + 20px);
 }
 
 body {
@@ -98,6 +99,11 @@ a {
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
+}
+
+main:focus,
+main:focus-visible {
+  outline: none;
 }
 
 ::selection {
@@ -209,7 +215,7 @@ a {
 .nav-toggle {
   display: none;
   align-items: center;
-  min-height: 36px;
+  min-height: 44px;
   padding: 0 14px;
   border: 1px solid var(--line);
   border-radius: 980px;
@@ -249,6 +255,13 @@ h1,
   gap: clamp(28px, 5vw, 64px);
   align-items: end;
   margin-top: clamp(28px, 4vw, 40px);
+}
+
+.hero-grid > *,
+.principles > *,
+.about-grid > *,
+.chapter > * {
+  min-width: 0;
 }
 
 .lede {
@@ -353,6 +366,7 @@ h1,
 }
 
 .step {
+  min-width: 0;
   padding: 14px 0;
   border-top: 1px solid var(--line);
 }
@@ -367,6 +381,7 @@ h1,
 .what {
   display: grid;
   flex: 1;
+  min-width: 0;
   gap: 2px;
 }
 
@@ -391,13 +406,15 @@ h1,
 }
 
 .status {
-  min-width: 72px;
+  flex: none;
+  min-width: 4.75rem;
   padding: 4px 10px;
   border-radius: 980px;
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.02em;
   text-align: center;
+  white-space: nowrap;
 }
 
 .status.sent {
@@ -589,17 +606,22 @@ h2 {
   max-width: 16ch;
 }
 
+.close-panel .actions,
+.contact-layout .actions,
+.missing .actions {
+  margin-top: 0;
+}
+
 .page-intro {
   padding: clamp(48px, 8vh, 84px) 0 12px;
 }
 
 .page-intro h1 {
   font-size: clamp(3rem, 8vw, 5.5rem);
-  max-width: 12ch;
+  max-width: 14ch;
 }
 
 .chapter {
-  scroll-margin-top: 72px;
   display: grid;
   grid-template-columns: minmax(140px, 220px) minmax(0, 1fr);
   gap: 20px 40px;
@@ -746,6 +768,17 @@ h2 {
 
 .reach a {
   color: var(--accent);
+  overflow-wrap: anywhere;
+}
+
+.reach h2,
+.fact dt {
+  flex: none;
+}
+
+.reach p,
+.fact dd {
+  min-width: 0;
 }
 
 .reach a:hover {
@@ -814,7 +847,7 @@ h2 {
   .principles,
   .about-grid,
   .chapter {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .fact dd {
@@ -822,13 +855,35 @@ h2 {
   }
 }
 
+@media (max-width: 720px) {
+  .hero h1 br {
+    display: none;
+  }
+}
+
 @media (max-width: 760px) {
+  .nav-bar {
+    position: static;
+  }
+
   .nav-toggle {
     display: inline-flex;
   }
 
+  .brand {
+    min-width: 0;
+  }
+
   .brand-name {
+    overflow: hidden;
     font-size: 15px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .site-header:has(.site-nav.is-open) {
+    background: var(--bg-elevated);
+    border-bottom-color: transparent;
   }
 
   .site-nav {
@@ -837,7 +892,7 @@ h2 {
     left: 0;
     right: 0;
     top: 100%;
-    padding: 6px var(--gutter) 14px;
+    padding: 4px var(--gutter) 12px;
     background: var(--bg-elevated);
     border-bottom: 1px solid var(--line);
     box-shadow: var(--shadow);
@@ -852,8 +907,8 @@ h2 {
   }
 
   .site-nav a {
-    padding-inline: 0;
-    border-radius: 0;
+    width: fit-content;
+    padding-inline: 12px;
   }
 
   .work-row {

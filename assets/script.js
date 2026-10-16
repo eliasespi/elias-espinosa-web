@@ -24,12 +24,25 @@ toggle?.addEventListener("click", () => {
   setOpen(toggle.getAttribute("aria-expanded") !== "true");
 });
 
+document.addEventListener("click", (event) => {
+  if (!toggle || !nav) return;
+  if (toggle.getAttribute("aria-expanded") !== "true") return;
+  if (!(event.target instanceof Node)) return;
+  if (toggle.contains(event.target) || nav.contains(event.target)) return;
+  setOpen(false);
+});
+
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") setOpen(false);
 });
 
 nav?.querySelectorAll("a").forEach((link) => {
   link.addEventListener("click", () => setOpen(false));
+});
+
+const desktopNav = window.matchMedia("(min-width: 761px)");
+desktopNav.addEventListener("change", () => {
+  if (desktopNav.matches) setOpen(false);
 });
 
 const reveals = document.querySelectorAll(".reveal");
@@ -46,7 +59,7 @@ if (reduce || !("IntersectionObserver" in window)) {
         observer.unobserve(entry.target);
       });
     },
-    { threshold: 0.16, rootMargin: "0px 0px -8% 0px" }
+    { threshold: 0, rootMargin: "0px 0px -24px 0px" }
   );
   reveals.forEach((el) => observer.observe(el));
 }
