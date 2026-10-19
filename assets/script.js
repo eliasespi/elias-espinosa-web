@@ -88,6 +88,30 @@ if (sectionLinks.length && 'IntersectionObserver' in window) {
   sections.forEach(section => sectionObserver.observe(section));
 }
 
+const flowLinks = [...document.querySelectorAll('#site-nav a[href^="#"]')];
+if (flowLinks.length && 'IntersectionObserver' in window) {
+  const flowSections = flowLinks
+    .map(link => document.querySelector(link.hash))
+    .filter(Boolean);
+
+  const markFlow = (id) => {
+    flowLinks.forEach(link => {
+      if (id && link.hash === `#${id}`) link.setAttribute('aria-current', 'location');
+      else link.removeAttribute('aria-current');
+    });
+  };
+
+  const flowObserver = new IntersectionObserver(entries => {
+    const visible = entries
+      .filter(entry => entry.isIntersecting)
+      .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+    if (!visible) return;
+    markFlow(visible.target.id);
+  }, { rootMargin: '-20% 0px -55% 0px', threshold: [0.15, 0.4] });
+
+  flowSections.forEach(section => flowObserver.observe(section));
+}
+
 const projectAccordions = [...document.querySelectorAll('.project-accordion')];
 if (projectAccordions.length) {
   projectAccordions.forEach(project => {

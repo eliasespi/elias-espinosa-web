@@ -4,71 +4,17 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>About | Elias Espinosa</title>
-  <meta name="description" content="About Elias Espinosa: solutions architecture, systems design, automation, design, travel, photography, and independent projects.">
-  <meta name="theme-color" content="#f7f5f0">
-  <link rel="canonical" href="https://www.eliasmespinosa.com/about.html">
+  <link rel="canonical" href="https://www.eliasmespinosa.com/#about">
+  <meta http-equiv="refresh" content="0; url=/#about">
   <link rel="icon" href="/assets/favicon.svg?v=20261016-6" type="image/svg+xml">
-  <meta property="og:title" content="About | Elias Espinosa">
-  <meta property="og:description" content="Systems architecture, design, travel, photography, and independent projects.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://www.eliasmespinosa.com/about.html">
-  <link rel="stylesheet" href="/assets/styles.css?v=20261016-6">
-  <link rel="stylesheet" href="/assets/neutral.css?v=20261016-10">
-  <link rel="stylesheet" href="/assets/inner.css?v=20261016-1">
-  <script defer src="/assets/script.js?v=20261016-8"></script>
+  <script>
+    (function () {
+      var keep = { "#work": 1, "#interests": 1, "#places": 1 };
+      location.replace("/" + (keep[location.hash] ? location.hash : "#about"));
+    })();
+  </script>
 </head>
-<body data-page="about">
-  <a class="skip" href="#content">Skip to content</a>
-  <header class="site-header">
-    <div class="nav-bar wrap">
-      <a class="brand" href="/" aria-label="Elias Espinosa, home">Elias Espinosa</a>
-      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" hidden>Menu <span aria-hidden="true">+</span></button>
-      <nav id="site-nav" class="site-nav" aria-label="Primary"><a href="/about.html" aria-current="page">About</a><a href="/work.html">Projects</a><a href="/contact.html">Contact</a></nav>
-    </div>
-  </header>
-
-  <main id="content" tabindex="-1">
-    <section class="quiet-page-intro wrap" data-reveal>
-      <h1>About</h1>
-      <p>Systems, design, travel, and photography.</p>
-    </section>
-
-    <section class="quiet-list wrap" aria-label="About Elias Espinosa">
-      <article id="work" class="quiet-row" data-reveal>
-        <span class="quiet-row-label">Work</span>
-        <div>
-          <h2>Solutions architecture &amp; systems design.</h2>
-          <p>Architecture, automation, platforms, and data.</p>
-        </div>
-      </article>
-
-      <article id="interests" class="quiet-row" data-reveal>
-        <span class="quiet-row-label">Design</span>
-        <div>
-          <h2>Interiors &amp; personal style.</h2>
-          <p>Traditional interiors, classic clothing, and well-made objects.</p>
-        </div>
-      </article>
-
-      <article id="places" class="quiet-row" data-reveal>
-        <span class="quiet-row-label">Travel</span>
-        <div>
-          <h2>Travel &amp; photography.</h2>
-          <p>Architecture, hotels, landscapes, and photographs.</p>
-        </div>
-      </article>
-    </section>
-
-    <section class="quiet-meta wrap" data-reveal>
-      <span>Florida State University</span>
-      <span>B.S. Information, Communication &amp; Technology</span>
-    </section>
-  </main>
-
-  <footer class="site-footer wrap">
-    <a class="brand" href="/" aria-label="Elias Espinosa, home">Elias Espinosa</a>
-    <p>Based in South Florida.</p>
-    <div><a href="https://www.linkedin.com/in/eliasmespinosa">LinkedIn <span aria-hidden="true">↗</span></a><span>© <span id="year">2026</span></span></div>
-  </footer>
+<body>
+  <p><a href="/#about">About</a></p>
 </body>
 </html>

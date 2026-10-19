@@ -193,7 +193,9 @@ a.site-frame:hover,
   transform: translate(-50%,-50%) rotate(0deg);
 }
 .project-accordion summary:hover .project-accordion-title h2,
-.project-accordion summary:focus-visible .project-accordion-title h2 { color: #50555a; }
+.project-accordion summary:hover .project-accordion-title h3,
+.project-accordion summary:focus-visible .project-accordion-title h2,
+.project-accordion summary:focus-visible .project-accordion-title h3 { color: #50555a; }
 .project-accordion-body {
   padding: 0 0 clamp(56px, 8vw, 92px) 96px;
 }
@@ -238,7 +240,8 @@ a.site-frame:hover,
     min-height: 128px;
     padding-block: 22px;
   }
-  .project-accordion-title h2 { font-size: 48px; }
+  .project-accordion-title h2,
+  .project-accordion-title h3 { font-size: 48px; }
   .project-accordion-meta {
     grid-column: 2;
     font-size: 9px;
