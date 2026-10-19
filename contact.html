@@ -15,6 +15,46 @@
   <link rel="stylesheet" href="/assets/styles.css?v=20261019-1">
   <link rel="stylesheet" href="/assets/neutral.css?v=20261019-1">
   <link rel="stylesheet" href="/assets/inner.css?v=20261019-3">
+  <style>
+    .contact-actions {
+      display: grid;
+      gap: 12px;
+      width: min(520px, calc(100% - 40px));
+      margin: 0 auto clamp(96px, 12vw, 148px);
+    }
+
+    .contact-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 58px;
+      padding: 0 22px;
+      border: 1px solid var(--line-dark);
+      background: transparent;
+      font-size: 15px;
+      font-weight: 650;
+      letter-spacing: -.01em;
+      transition: transform .2s var(--ease), background .2s ease, color .2s ease, border-color .2s ease;
+    }
+
+    .contact-button-primary {
+      background: var(--ink);
+      border-color: var(--ink);
+      color: var(--cream);
+    }
+
+    .contact-button:hover,
+    .contact-button:focus-visible {
+      transform: translateY(-1px);
+      border-color: var(--ink);
+    }
+
+    .contact-button-primary:hover,
+    .contact-button-primary:focus-visible {
+      background: #303336;
+      color: var(--cream);
+    }
+  </style>
   <script defer src="/assets/script.js?v=20261019-2"></script>
 </head>
 <body data-page="contact">
@@ -32,17 +72,9 @@
       <h1>Contact</h1>
     </section>
 
-    <section class="contact-methods wrap" aria-label="Contact methods" data-reveal>
-      <a class="contact-method" href="mailto:eliasmespi@gmail.com">
-        <span class="quiet-row-label">Email</span>
-        <span class="contact-method-value">eliasmespi@gmail.com</span>
-        <span class="contact-method-arrow" aria-hidden="true">→</span>
-      </a>
-      <a class="contact-method" href="https://www.linkedin.com/in/eliasmespinosa">
-        <span class="quiet-row-label">LinkedIn</span>
-        <span class="contact-method-value">linkedin.com/in/eliasmespinosa</span>
-        <span class="contact-method-arrow" aria-hidden="true">↗</span>
-      </a>
+    <section class="contact-actions" aria-label="Contact methods" data-reveal>
+      <a class="contact-button contact-button-primary" href="mailto:eliasmespi@gmail.com">Send me an email</a>
+      <a class="contact-button" href="https://www.linkedin.com/in/eliasmespinosa">Connect with me on LinkedIn</a>
     </section>
   </main>
 
