@@ -9,7 +9,8 @@
   <link rel="icon" href="/assets/favicon.svg?v=20261016-6" type="image/svg+xml">
   <script>
     (function () {
-      var hash = location.hash === "#personal-site" ? location.hash : "#projects";
+      var keep = { "#personal-site": 1, "#nextshelved": 1 };
+      var hash = keep[location.hash] ? location.hash : "#projects";
       location.replace("/" + hash);
     })();
   </script>

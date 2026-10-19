@@ -148,6 +148,10 @@
   font-size: 14px;
 }
 
+.quiet-projects .project-facts:has(> :only-child) {
+  grid-template-columns: minmax(0, 1fr);
+}
+
 .quiet-projects .project-facts > div {
   min-height: 88px;
   padding-block: 20px;
