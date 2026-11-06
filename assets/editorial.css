@@ -308,3 +308,23 @@ h1,h2,h3,h4,p,figure{margin:0}
   *,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}
   .motion-ready [data-reveal]{opacity:1;transform:none}
 }
+
+/* A quieter, more personal final chapter. */
+.chapter-elsewhere{padding-bottom:clamp(90px,11vw,160px);background:#eeebe5}
+.elsewhere-grid{display:grid;grid-template-columns:1.2fr .8fr;align-items:end;gap:clamp(55px,8vw,140px);padding:clamp(88px,11vw,150px) var(--margin) 0}
+.elsewhere-grid .display-heading{margin-top:27px;font-size:clamp(66px,8vw,128px)}
+.elsewhere-detail{padding-bottom:12px}
+.elsewhere-detail>p{max-width:440px;font:400 clamp(22px,2.45vw,34px)/1.35 var(--serif);letter-spacing:-.045em}
+.elsewhere-tags{display:flex;flex-wrap:wrap;gap:10px;margin:34px 0 37px}
+.elsewhere-tags span{padding:9px 14px;border:1px solid #beb9b0;border-radius:40px;color:#555149;font-size:11px}
+.work-tile:not(.work-tile-large) .growth-label{font-size:clamp(52px,7.4vw,96px)}
+.work-tile-large .art-books .bookshelf-mark{font-size:clamp(70px,10vw,170px)}
+.chapter-work .work-outro{padding-bottom:clamp(85px,10vw,140px)}
+@media(max-width:760px){
+  .elsewhere-grid{grid-template-columns:1fr;gap:55px;padding-top:80px}
+  .elsewhere-grid .display-heading{font-size:clamp(63px,11.5vw,90px)}
+  .elsewhere-detail>p{font-size:29px}
+  .chapter-elsewhere{padding-bottom:95px}
+  .work-tile:not(.work-tile-large) .growth-label{font-size:clamp(53px,12vw,84px)}
+  .work-tile-large .art-books .bookshelf-mark{font-size:clamp(50px,12vw,83px)}
+}
