@@ -328,3 +328,13 @@ h1,h2,h3,h4,p,figure{margin:0}
   .work-tile:not(.work-tile-large) .growth-label{font-size:clamp(53px,12vw,84px)}
   .work-tile-large .art-books .bookshelf-mark{font-size:clamp(50px,12vw,83px)}
 }
+
+/* Keep case studies scannable and give the editorial headings breathing room. */
+.case-item{padding-top:clamp(65px,7vw,100px);padding-bottom:clamp(65px,7vw,100px)}
+.case-detail{margin-top:clamp(40px,5vw,65px)}
+.case-detail aside strong{font-size:clamp(28px,3.7vw,60px)}
+.case-detail aside small{max-width:320px}
+@media(max-width:760px){
+  .case-item{padding-top:68px;padding-bottom:72px}
+  .case-detail{margin-top:36px}
+}
