@@ -1,4 +1,4 @@
-import {configured,db,imageUrl,el} from './api.js';
+import {configured,db,imageUrl,el} from './api.js?v=5';
 const status=document.querySelector('#status');
 const grid=document.querySelector('#collections');
 const viewer=document.querySelector('#viewer');
