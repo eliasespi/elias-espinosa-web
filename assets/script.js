@@ -7,6 +7,19 @@ if (year) year.textContent = String(new Date().getFullYear());
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 const toggle = document.querySelector('.nav-toggle');
 const nav = document.getElementById('site-nav');
+// One shared menu definition; static HTML provides a no-JS fallback.
+const siteLinks = [["/about.html","about"],["/photography/","photography"],["/work.html","projects"],["/contact.html","contact"]];
+const currentPath = location.pathname.replace(/index\.html$/, '');
+for (const menu of document.querySelectorAll('#site-nav, #home-nav')) {
+  menu.replaceChildren(...siteLinks.map(([href, label]) => {
+    const link = document.createElement('a');
+    link.href = href;
+    link.textContent = label;
+    if (href === currentPath) link.setAttribute('aria-current', 'page');
+    return link;
+  }));
+}
+
 
 if (toggle && nav) {
   toggle.hidden = false;
@@ -109,18 +122,5 @@ if (projectAccordions.length) {
   window.addEventListener('hashchange', openProjectFromHash);
 }
 
-document.querySelectorAll('a[href]').forEach(link => {
-  link.addEventListener('click', event => {
-    if (reducedMotion.matches || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-    if (link.target || link.hasAttribute('download')) return;
-
-    const destination = new URL(link.href, window.location.href);
-    if (destination.origin !== window.location.origin) return;
-    const sameDocument = destination.pathname === window.location.pathname && destination.search === window.location.search;
-    if (sameDocument && destination.hash) return;
-
-    event.preventDefault();
-    root.classList.add('page-leaving');
-    window.setTimeout(() => { window.location.href = destination.href; }, 150);
-  });
-});
+// Use native navigation for reliable back/forward, history, and dynamic gallery links.
+window.addEventListener('pageshow', () => root.classList.remove('page-leaving'));
