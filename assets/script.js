@@ -8,7 +8,7 @@ const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 const toggle = document.querySelector('.nav-toggle');
 const nav = document.getElementById('site-nav');
 // One shared menu definition; static HTML provides a no-JS fallback.
-const siteLinks = [["/about.html","about"],["/photography/","photography"],["/work.html","projects"],["/contact.html","contact"]];
+const siteLinks = [["/about.html","About"],["/photography/","Photography"],["/work.html","Projects"],["/contact.html","Contact"]];
 const currentPath = location.pathname.replace(/index\.html$/, '');
 for (const menu of document.querySelectorAll('#site-nav, #home-nav')) {
   menu.replaceChildren(...siteLinks.map(([href, label]) => {
